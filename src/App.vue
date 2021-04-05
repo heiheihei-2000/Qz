@@ -1,8 +1,7 @@
-<template
->
+<template>
   <el-container>
-    <the-header></the-header>
-    <router-view/>
+   <el-header><the-header style="width: 1400px">Header</the-header></el-header>
+   <el-main><router-view></router-view></el-main>
   </el-container>
 </template>
 

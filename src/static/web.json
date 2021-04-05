@@ -1,0 +1,44 @@
+{
+  "user": [
+    {
+      "id": "1",
+      "name": "wiki",
+      "pass": "111111"
+    },
+    {
+      "pass": "333",
+      "name": "333",
+      "id": "22"
+    }
+  ],
+  "tableData": [
+    {
+      "id": "1",
+      "name": "spring框架",
+      "class": "java",
+      "txt": "Spring框架是由于软件开发的复杂性而创建的。Spring使用的是基本的JavaBean来完成以前只可能由EJB完",
+      "children": [
+        {
+          "id": "1.1",
+          "name": "spring框架",
+          "class": "java"
+        }
+      ]
+
+    },
+    {
+      "id": "2",
+      "name": "spring框架",
+      "class": "java",
+      "txt": "Spring框架是由于软件开发的复杂性而创建的。Spring使用的是基本的JavaBean来完成以前只可能由EJB完",
+      "children": [
+        {
+          "id": "3",
+          "name": "spring框架",
+          "class": "java"
+        }
+      ]
+    }
+
+  ]
+}

@@ -4,6 +4,7 @@
 
 
 <el-menu
+    router
     :default-active="activeIndex2"
     class="el-menu-demo"
     mode="horizontal"
@@ -16,59 +17,86 @@
     padding-left: 30px;
     padding-top: 20px;
     padding-right: 50px;
+    height: 40px;
     "
   >QuizPass</div>
+  <el-menu-item index="/ue" v-show="checkLogin">我的文档</el-menu-item>
 
-<el-menu-item index="1">处理中心</el-menu-item>
 
-<el-menu-item index="3" disabled>消息中心</el-menu-item>
-<el-menu-item index="4" v-show="user.id">文件管理</el-menu-item>
+
+
+
+
+
 
   <div style="text-align: center">
-    <el-popconfirm
-        confirmButtonText='好的'
-        cancelButtonText='不用了'
-        icon="el-icon-info"
-        iconColor="red"
-        title="确定退出？"
-    >
 
-      <template #reference >
-        <el-button style="float: right;margin-top: 10px;margin-right: 10px" v-show="user.id">退出登陆</el-button>
-      </template>
 
-    </el-popconfirm>
+
+        <el-button style="float: right;margin-top: 10px;margin-right: 10px" v-show="checkLogin" @click="logout()">退出登陆</el-button>
+
+
+
 
   </div>
   <div name="button" style="float: right ;padding-top: 10px">
  <el-row>
-    <el-button v-show="!user.id" @click="">登陆</el-button>
-    <el-button v-show="!user.id" @click="dialogVisible = true">注册</el-button>
+    <el-button v-show="!checkLogin" :plain="true" @click="dialogVisible2 = true">登陆</el-button>
+    <el-button v-show="!checkLogin" @click="dialogVisible = true">注册</el-button>
  </el-row>
     <el-dialog
         title="用户注册"
         :visible.sync="dialogVisible"
         width="30%"
         :before-close="handleClose">
-      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="age">
-          <el-input v-model.number="ruleForm.age"></el-input>
+      <el-form :model="user" status-icon  ref="user" :rules="rules" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="用户名" prop="name">
+          <el-input v-model="user.name"></el-input>
+        </el-form-item>
+        <el-form-item label="账号" prop="id">
+          <el-input v-model="user.id"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+          <el-input type="password" v-model="user.pass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+          <el-input type="password" v-model="user.checkPass" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
+          <el-button @click="resetForm('user')">重置</el-button>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
+    <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible2"
+        width="30%"
+        :before-close="handleClose">
+      <span>
+        <el-form :model="login" status-icon  ref="login" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="账号" prop="id">
+         <el-input v-model.number="login.id"></el-input>
+         </el-form-item>
+        <el-form-item label="密码" prop="pass">
+         <el-input type="password" v-model="login.pass" autocomplete="off"></el-input>
+         </el-form-item>
+
+
+  <el-form-item>
+    <el-button type="primary" @click="userlogin()">提交</el-button>
+    <el-button @click="resetForm('login')">重置</el-button>
+  </el-form-item>
+</el-form>
+      </span>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
   </span>
     </el-dialog>
 
@@ -77,17 +105,13 @@
 
 </el-menu>
 
-
-
-
-
 </div>
 
 </template>
 <script>
 export default {
   data() {
-    var checkAge = (rule, value, callback) => {
+    var checkId = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('账号不能为空'));
       }
@@ -107,8 +131,8 @@ export default {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
-        if (this.ruleForm.checkPass !== '') {
-          this.$refs.ruleForm.validateField('checkPass');
+        if (this.user.checkPass !== '') {
+         this.$refs.user.validateField('checkPass');
         }
         callback();
       }
@@ -116,7 +140,7 @@ export default {
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'));
-      } else if (value !== this.ruleForm.pass) {
+      } else if (value !== this.user.pass) {
         callback(new Error('两次输入密码不一致!'));
       } else {
         callback();
@@ -124,53 +148,129 @@ export default {
     };
 
     return {
+      checkLogin: '',
+      login:{
+        id: '',
+        pass: '',
 
-        ruleForm: {
-          pass: '',
-          checkPass: '',
-          age: ''
-        },
-        rules: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
-          ]
+      },
+      user: {
+        pass: '',
+        checkPass: '',
+        name: '',
+        id: '',
 
+      },
+      rules: {
+        pass: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+        id: [
+          { validator: checkId, trigger: 'blur' }
+        ]
       },
 
       dialogVisible: false,
-      user:{
-          id:'1',
-        name:'成龙',
-        passwor:''
-      },
+      dialogVisible2:false,
+
       activeIndex: '1',
       activeIndex2: '1'
     };
   },
   methods: {
-    submitForm(formName) {
-
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
+    logout(){
+      const  _this=this;
+      this.$confirm('确定要退出么?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '退出登陆!'
         }
+        );
+        _this.checkLogin='';
+        _this.login.id='';
+        _this.login.pass='';
+         _this.$router.push("/");
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
       });
+    },
+    userlogin(){
+     const _this=this;
+      this.axios.get("http://localhost:3000/user/"+_this.login.id).then(function (resp){
+        console.log(resp.data)
+       if(resp.data.length==0){
+         _this.$message({
+           message: '用户名不存在',
+           type: 'warning'
+         });
+       }else  if (resp.data.pass==_this.login.pass){
+         _this.$message({
+           message: '恭喜你，登陆成功',
+           type: 'success'
+         });
+         _this.checkLogin=1;
+         _this.dialogVisible2 = false
+
+       }else {
+         _this.$message({
+           message: '密码错误',
+           type: 'warning'
+         });
+       }
+      })
+
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    }
-  },
-    _al(){
-      console.log('111');
+    },
+    submitForm() {
+
+       const _this=this;
+      var userId=[];
+      this.axios.get("http://localhost:3000/user").then(function (resp){
+      for( var i=0;i<resp.data.length;i++){
+        userId[i]=resp.data[i].id;
+      };
+       if(userId.indexOf(_this.user.id)<0){
+         _this.axios.post("http://localhost:3000/user",{
+           pass: _this.user.pass,
+           name: _this.user.name,
+           id:_this.user.id,
+         });
+         _this.$alert("您的账号："+_this.user.id+'    '
+             +"已经成功注册" ,{
+           confirmButtonText: '确定',
+
+         });
+       }else{
+         _this.$alert("您的输入的账号："+_this.user.id+'    '
+             +"已经被注册" ,{
+           confirmButtonText: '确定',
+
+         });
+       }
+
+
+      })
+
+
+      // this.axios.post("http://localhost:3000/user", {
+      //   pass: this.user.pass,
+      //   checkPass: this.user.checkPass,
+      //   age: this.user.age,
+      //   id: this.user.id,
+      // })
+
     },
 
     handleClose(done) {
@@ -178,13 +278,15 @@ export default {
           .then(_ => {
             done();
           })
-          .catch(_ => {});
+          .catch(_ => {
+          });
     },
 
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     }
 
+  }
 }
 </script>
 <style>
