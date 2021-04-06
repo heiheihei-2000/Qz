@@ -158,7 +158,7 @@ export default {
          // _this.tableData.push(res.data) ;
          _this.tableData=res.data ;
 
-        console.log(_this.tableData );
+        console.log(_this.tableData);
         let demoTableDate ={
           "id": "",
           "name": "",
@@ -172,7 +172,6 @@ export default {
             }
           ]
         }
-
 
       })
           .catch(function (error) {
