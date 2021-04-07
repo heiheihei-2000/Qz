@@ -1,8 +1,8 @@
 <template>
-  <el-container>
-    <el-header>
+  <el-container >
+    <el-header >
     </el-header>
-    <el-main><router-view></router-view></el-main>
+    <el-main ><router-view></router-view></el-main>
   </el-container>
 </template>
 
@@ -13,5 +13,10 @@ export default {
 </script>
 
 <style scoped>
+.el-header {
+  padding: 0;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
 
 </style>

@@ -1,6 +1,6 @@
 
 <template>
-<div style="width: 1450px">
+<div style="" >
 
 
 <el-menu
@@ -20,24 +20,10 @@
     height: 40px;
     "
   >QuizPass</div>
-  <el-menu-item index="/ue" v-show="checkLogin">我的文档</el-menu-item>
-
-
-
-
-
-
-
-
+  <el-menu-item  index="/shouye"> 首页</el-menu-item>
+  <el-menu-item index="/uemain" v-show="checkLogin">我的文档</el-menu-item>
   <div style="text-align: center">
-
-
-
         <el-button style="float: right;margin-top: 10px;margin-right: 10px" v-show="checkLogin" @click="logout()">退出登陆</el-button>
-
-
-
-
   </div>
   <div name="button" style="float: right ;padding-top: 10px">
  <el-row>
@@ -149,6 +135,8 @@ export default {
 
     return {
       checkLogin: '',
+      tureId:'',
+      turePass:'',
       login:{
         id: '',
         pass: '',
@@ -181,6 +169,20 @@ export default {
     };
   },
   methods: {
+    findall(a,x){
+  var results=[],
+      len=a.length,
+      pos=0;
+  while(pos<len){
+    pos=a.indexOf(x,pos);
+    if(pos===-1){//未找到就退出循环完成搜索
+      break;
+    }
+    results.push(pos);//找到就存储索引
+    pos+=1;//并从下个位置开始搜索
+  }
+  return results;
+},
     logout(){
       const  _this=this;
       this.$confirm('确定要退出么?', '提示', {
@@ -206,28 +208,73 @@ export default {
     },
     userlogin(){
      const _this=this;
-      this.axios.get("http://localhost:3000/user/"+_this.login.id).then(function (resp){
-        console.log(resp.data)
-       if(resp.data.length==0){
-         _this.$message({
-           message: '用户名不存在',
-           type: 'warning'
-         });
-       }else  if (resp.data.pass==_this.login.pass){
-         _this.$message({
-           message: '恭喜你，登陆成功',
-           type: 'success'
-         });
-         _this.checkLogin=1;
-         _this.dialogVisible2 = false
+     let uid=[]
 
-       }else {
-         _this.$message({
-           message: '密码错误',
-           type: 'warning'
-         });
-       }
+
+      this.axios.get("http://localhost:3000/user/").then(function (resp){
+        for (let i=0;i<resp.data.length;i++){
+          uid[i]=resp.data[i].id;
+          console.log(resp.data)
+          console.log(uid)
+        }
+        let inOf=_this.findall(uid,_this.login.id.toString());
+        console.log(_this.login.id.toString());
+        console.log(inOf);
+       console.log(resp.data[inOf].pass)
+        let a=parseInt( resp.data[inOf].pass);
+       let b=parseInt(_this.login.pass);
+        if(inOf[0]>0){
+          if( a==b){
+            _this.$message({
+              message: '恭喜你，登陆成功',
+              type: 'success',
+
+            });
+            _this.checkLogin=1;
+            _this.dialogVisible2 = false
+          }else{
+            _this.$message({
+              message: '密码错误',
+              type: 'warning'
+            });
+          }
+
+
+              }else {
+          _this.$message({
+            message: '用户名不存在',
+            type: 'warning'
+          });
+        }
       })
+
+
+
+
+
+
+      // this.axios.get("http://localhost:3000/user/"+_this.login.id).then(function (resp){
+      //   console.log(resp.data)
+      //  if(resp.data=null){
+      //    _this.$message({
+      //      message: '用户名不存在',
+      //      type: 'warning'
+      //    });
+      //  }else  if (resp.data.pass==_this.login.pass){
+      //    _this.$message({
+      //      message: '恭喜你，登陆成功',
+      //      type: 'success'
+      //    });
+      //    _this.checkLogin=1;
+      //    _this.dialogVisible2 = false
+      //
+      //  }else {
+      //    _this.$message({
+      //      message: '密码错误',
+      //      type: 'warning'
+      //    });
+      //  }
+      // })
 
     },
     resetForm(formName) {
@@ -301,6 +348,11 @@ export default {
 }
 element.style {
   width: 1300px;
+  padding: 0px;
+  margin: 0px;
 }
+
+
+
 
 </style>

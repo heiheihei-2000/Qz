@@ -5,6 +5,8 @@ import wenjian from "@/views/wenjian";
 import ue from "@/components/ue";
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
+import shouye from "@/components/shouye";
+import uemain from "@/components/uemain";
 
 Vue.use(VueRouter)
 Vue.use(Antd);
@@ -19,6 +21,16 @@ const routes = [
   {
     path: '/ue',
     component: ue
+  },
+  {
+    path:'/shouye',
+    component:shouye
+
+  },
+  {
+    path:'/uemain',
+    component:uemain
+
   }
 
 

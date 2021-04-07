@@ -13,31 +13,19 @@
   ],
   "tableData": [
     {
-      "id": "1",
-      "name": "spring框架",
-      "class": "java",
-      "txt": "Spring框架是由于软件开发的复杂性而创建的。Spring使用的是基本的JavaBean来完成以前只可能由EJB完",
+
+      "noteId": "1",
+
+
+
       "children": [
         {
-          "id": "1.1",
-          "name": "spring框架",
+          "noteId": "1.1",
+          "noteName": "spring框架",
           "class": "java"
         }
       ]
 
-    },
-    {
-      "id": "2",
-      "name": "spring框架",
-      "class": "java",
-      "txt": "Spring框架是由于软件开发的复杂性而创建的。Spring使用的是基本的JavaBean来完成以前只可能由EJB完",
-      "children": [
-        {
-          "id": "3",
-          "name": "spring框架",
-          "class": "java"
-        }
-      ]
     }
 
   ]

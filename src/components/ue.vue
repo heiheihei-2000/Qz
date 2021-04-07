@@ -5,7 +5,7 @@ height: 610px">
     <div name="option" style="width: 400px;height: 610px;float: left">
       <el-table
           :data="tableData"
-          row-key="id"
+          row-key="noteId"
           :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
           style="width: 400px">
         <el-table-column
@@ -23,7 +23,7 @@ height: 610px">
             label="操作"
             width="100">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="handleClick(scope.row)"  v-show="false">编辑</el-button>
+            <el-button type="text" size="small" @click="handleClick(scope.row)"  v-show="true">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -47,13 +47,13 @@ height: 610px">
           :visible.sync="drawer"
           :direction="direction"
           >
-        <span v-model="row.txt">
-          {{row.txt}}
+        <span v-model="row.noteName" >
+          {{row.noteName}}
 
         </span>
       </el-drawer>
       <el-card style="height: 610px;">
-        <quill-editor v-model="this.row.txt" ref="myQuillEditor" style="height: 500px;" :options="editorOption">
+        <quill-editor v-model="this.row.noteName" ref="myQuillEditor" style="height: 500px;" :options="editorOption">
         </quill-editor>
       </el-card>
     </div>
@@ -88,14 +88,14 @@ export default {
 
 
       row:{
-        noteId:'',
-        noteName:'',
+        noteId:'0',
+        noteName:'0',
 
 
       },
       tableData: [
         // {
-        //   id:'',
+        //   noteId:'',
         //   name:'',
         //   class:'',
         //   txt:'',
@@ -142,13 +142,13 @@ export default {
       console.log("init");
       this.$axios({
         method:'get',
-        url:'/api/Note/test/1',
+        // url:'/api/Note/test/1',
+        // url:'http://localhost:8080/Note/test/1',
         // data:{"page":this.pagination.pageIndex,"limit":this.pagination.pageSize, "pid": this.row.id},
+               url:'http://localhost:3000/tableData'
 
-        headers:{
-          'Content-Type':'application/json;charset=utf-8'
-        }
       }).then(res => {
+      // this.axios.get("/api/Note/test/1").then(res => {
         console.log(res);
 
        // _this.pagination.total = res.data.datas.data.total;
@@ -156,22 +156,10 @@ export default {
 
         console.log(res.data)
          // _this.tableData.push(res.data) ;
-         _this.tableData=res.data ;
+         _this.tableData=res.data;
 
         console.log(_this.tableData);
-        let demoTableDate ={
-          "id": "",
-          "name": "",
-          "class": "",
-          "txt": "",
-          "children": [
-            {
-              "id": "",
-              "name": "",
-              "class": ""
-            }
-          ]
-        }
+
 
       })
           .catch(function (error) {
@@ -183,15 +171,13 @@ export default {
     handleClick(row) {
 
       this.row=row;
-      console.log(row.txt);
+
     },
     getUEContent() { // 获取内容方法
       return this.editor.getContent()
     }
   },
-  destroyed() {
-    this.editor.destroy()
-  }
+
 }
 
 </script>
