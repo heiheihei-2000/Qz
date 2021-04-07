@@ -1,6 +1,6 @@
 
 <template>
-<div style="" >
+<div style="" id="head" >
 
 
 <el-menu
@@ -351,8 +351,8 @@ element.style {
   padding: 0px;
   margin: 0px;
 }
-
-
-
-
+section .el-header{
+  color: aqua;
+  padding: 0px;
+}
 </style>
