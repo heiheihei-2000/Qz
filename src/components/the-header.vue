@@ -22,6 +22,7 @@
   >QuizPass</div>
   <el-menu-item  index="/shouye"> 首页</el-menu-item>
   <el-menu-item index="/uemain" v-show="checkLogin">我的文档</el-menu-item>
+  <el-menu-item index="/kaodian" v-show="checkLogin">考点精炼</el-menu-item>
   <div style="text-align: center">
         <el-button style="float: right;margin-top: 10px;margin-right: 10px" v-show="checkLogin" @click="logout()">退出登陆</el-button>
   </div>
@@ -34,7 +35,7 @@
         title="用户注册"
         :visible.sync="dialogVisible"
         width="30%"
-        :before-close="handleClose">
+        >
       <el-form :model="user" status-icon  ref="user" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="name">
           <el-input v-model="user.name"></el-input>
@@ -54,16 +55,13 @@
           <el-button @click="resetForm('user')">重置</el-button>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
+
     </el-dialog>
     <el-dialog
-        title="提示"
+        title="用户登陆"
         :visible.sync="dialogVisible2"
         width="30%"
-        :before-close="handleClose">
+      >
       <span>
         <el-form :model="login" status-icon  ref="login" label-width="100px" class="demo-ruleForm">
           <el-form-item label="账号" prop="id">
@@ -80,10 +78,7 @@
   </el-form-item>
 </el-form>
       </span>
-      <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible2 = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible2 = false">确 定</el-button>
-  </span>
+
     </el-dialog>
 
   </div>
@@ -320,14 +315,7 @@ export default {
 
     },
 
-    handleClose(done) {
-      this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
-    },
+
 
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -352,7 +340,7 @@ element.style {
   margin: 0px;
 }
 section .el-header{
-  color: aqua;
+
   padding: 0px;
 }
 </style>

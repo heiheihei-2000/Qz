@@ -1,49 +1,48 @@
 <template>
-<div>
+<div style="padding: 10px">
   <el-table
+
       :data="tableData"
       border
-      style="width: 100%">
+
+     >
     <el-table-column
         fixed
-        prop="date"
-        label="日期"
-        width="150">
+        prop="id"
+        label="编号"
+       >
     </el-table-column>
     <el-table-column
         prop="name"
-        label="姓名"
-        width="120">
+        label="文档名"
+        >
     </el-table-column>
     <el-table-column
-        prop="province"
-        label="省份"
-        width="120">
+        prop="class"
+        label="分类"
+       >
     </el-table-column>
+<!--    <el-table-column-->
+<!--        prop="readnum"-->
+<!--        label="阅读量"-->
+<!--       >-->
+<!--    </el-table-column>-->
+<!--    <el-table-column-->
+<!--        prop="good"-->
+<!--        label="点赞量"-->
+<!--        >-->
+<!--    </el-table-column>-->
+
     <el-table-column
-        prop="city"
-        label="市区"
-        width="120">
-    </el-table-column>
-    <el-table-column
-        prop="address"
-        label="地址"
-        width="300">
-    </el-table-column>
-    <el-table-column
-        prop="zip"
-        label="邮编"
-        width="120">
-    </el-table-column>
-    <el-table-column
-        fixed="right"
+
         label="操作"
-        width="100">
-      <template slot-scope="scope">
+       >
+      <template slot-scope="scope" >
         <router-link to="/ue">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button
+              size="max"
+              @click="handleClick( scope.row)">编辑</el-button>
         </router-link>
-        <el-button type="text" size="small">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -52,46 +51,84 @@
 
 <script>
 export default {
-  name: "ue0",
-  methods: {
-    handleClick(row) {
-      console.log(row);
-    }
+  mounted: function () {
+    this.init()
   },
+  name: "ue0",
   data() {
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1517 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1519 弄',
-        zip: 200333
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1516 弄',
-        zip: 200333
-      }]
+      note: [
+        {
+          parent: {
+            noteId: '',
+            noteName: "",
+            path: "",
+            uId: ''
+          },
+          children: []
+        }
+      ],
+      tableData: [
+      ]
     }
+  },
+  methods: {
+    init() {
+      var _this = this
+      console.log("init");
+      this.$axios({
+        method: 'get',
+        url: 'http://localhost:8080/Note/test/1',
+        // data:{"page":this.pagination.pageIndex,"limit":this.pagination.pageSize, "pid": this.row.id},
+
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      }).then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+          let demoTableDate = {
+            "id": "",
+            "name": "",
+            "class": "",
+            "txt": "",
+            // "children": []
+          };
+          // 抽取数组中的一个对象
+          let obj = res.data[i];
+          // 对象的属性，返回的是一个属性列表
+          let keys = Object.keys(obj)
+          // 父节点对象
+          let Note = obj[keys[0]]
+          demoTableDate.id = Note.noteId
+          demoTableDate.name = Note.noteName
+          console.log(Note);
+          _this.tableData.push(demoTableDate)
+
+        }
+        console.log(_this.tableData);
+        console.log("88888");
+      })
+          .catch(function (error) {
+            console.log(error)
+          })
+    },
+    handleClick(row) {
+      console.log(row);
+      const _this = this;
+      console.log(row.id);
+      this.$store.state.parent=row.id;
+      //   axios.get("http://localhost:8080/Note/test/1")
+      // .then(function (resp){
+      //   console.log(resp.data)
+      // })
+      // }
+    },
+    mounted: function () {
+      this.init()
+    },
+
   }
-  }
+}
 
 </script>
 

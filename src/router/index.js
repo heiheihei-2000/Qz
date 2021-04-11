@@ -7,12 +7,16 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import shouye from "@/components/shouye";
 import uemain from "@/components/uemain";
+import wike from "@/components/wike";
+import kaodian from "@/components/kaodian";
+
 
 Vue.use(VueRouter)
 Vue.use(Antd);
 const routes = [
   {
-  path:'/'
+  path:'/',
+  redirect:'/shouye'
   },
   {
     path: '/allFile',
@@ -31,6 +35,14 @@ const routes = [
     path:'/uemain',
     component:uemain
 
+  },
+  {
+    path: '/wiki',
+    component: wike
+  },
+  {
+    path: '/kaodian',
+    component: kaodian
   }
 
 

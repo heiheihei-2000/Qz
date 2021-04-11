@@ -47,13 +47,13 @@ height: 610px">
           :visible.sync="drawer"
           :direction="direction"
           >
-        <span v-model="row.noteName" >
-          {{row.noteName}}
+        <span v-model="dContent" >
+          {{dContent}}
 
         </span>
       </el-drawer>
       <el-card style="height: 610px;">
-        <quill-editor v-model="this.row.noteName" ref="myQuillEditor" style="height: 500px;" :options="editorOption">
+        <quill-editor v-model="dContent" ref="myQuillEditor" style="height: 500px;" :options="editorOption">
         </quill-editor>
       </el-card>
     </div>
@@ -78,6 +78,7 @@ export default {
 
   data() {
     return {
+
       dialogFormEdit: false,
       dialogFormAdd:false,
       pagination: {
@@ -85,7 +86,7 @@ export default {
         pageSize: 10,
         total: 0,
       },
-
+     dContent:'',//富文本的内容
 
       row:{
         noteId:'0',
@@ -93,14 +94,8 @@ export default {
 
 
       },
-      tableData: [
-        // {
-        //   noteId:'',
-        //   name:'',
-        //   class:'',
-        //   txt:'',
-        // }
-      ],
+      tableData: [],//表格内容
+
       drawer: false,
       direction: 'rtl',
       content: null,
@@ -116,14 +111,41 @@ export default {
       type: Object
     }
   },
-  // mounted() {
-  //   const _this = this;
-  //   this.editor = UE.getEditor('editor', this.config); // 初始化UE
-  //   this.editor.addListener("ready", function () {
-  //     _this.editor.setContent(_this.defaultMsg) // 确保UE加载完成后，放入内容。
-  //   });
-  // },
+
   methods: {
+    init () {
+      var _this= this
+      console.log("init");
+      this.axios.get("http://localhost:8080/Note/getSonLists/"+_this.$store.state.parent).then(
+          function (resp) {
+            let demoT ={
+
+                  noteId: '',
+                  children: [
+
+                  ]
+
+          };
+            // _this.tableData.children.push(resp.data);
+            demoT.noteId=_this.$store.state.parent
+            console.log(_this.$store.state.parent)
+            let sonList =  resp.data;
+                for (let j = 0; j < sonList.length ; j++) {
+                  //初始化对象son
+                   let son = {
+                    "noteId":"",
+                    "noteName":"",
+                  }
+                  son.noteId = sonList[j].noteId
+                  son.noteName = sonList[j].noteName
+                  //赋值以后添加数据
+                  demoT.children.push(son)
+                }
+                _this.tableData.push(demoT);
+          }
+      )
+
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pagination.pageSize = val;
@@ -137,41 +159,11 @@ export default {
     },
 
 
-    init () {
-      var _this= this
-      console.log("init");
-      this.$axios({
-        method:'get',
-        // url:'/api/Note/test/1',
-        // url:'http://localhost:8080/Note/test/1',
-        // data:{"page":this.pagination.pageIndex,"limit":this.pagination.pageSize, "pid": this.row.id},
-               url:'http://localhost:3000/tableData'
-
-      }).then(res => {
-      // this.axios.get("/api/Note/test/1").then(res => {
-        console.log(res);
-
-       // _this.pagination.total = res.data.datas.data.total;
-        console.log(_this.pagination.total);
-
-        console.log(res.data)
-         // _this.tableData.push(res.data) ;
-         _this.tableData=res.data;
-
-        console.log(_this.tableData);
-
-
-      })
-          .catch(function (error) {
-            console.log(error)
-          })
-    },
-
 
     handleClick(row) {
 
       this.row=row;
-
+      this.dContent=row.noteName;
     },
     getUEContent() { // 获取内容方法
       return this.editor.getContent()

@@ -22,4 +22,8 @@ export default {
   padding: 0;
   margin: 0;
 }
+section .el-main{
+
+  padding: 0px;
+}
 </style>
