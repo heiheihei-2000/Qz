@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import wenjian from "@/views/wenjian";
-
 import ue from "@/components/ue";
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
@@ -9,6 +8,9 @@ import shouye from "@/components/shouye";
 import uemain from "@/components/uemain";
 import wike from "@/components/wike";
 import kaodian from "@/components/kaodian";
+import kaodian2 from "@/components/kaodian2";
+import fenlei from "@/components/fenlei";
+import ToDoList from "@/components/ToDoList";
 
 
 Vue.use(VueRouter)
@@ -43,7 +45,20 @@ const routes = [
   {
     path: '/kaodian',
     component: kaodian
+  },
+  {
+    path: '/kaodian2',
+    component: kaodian2
+  },
+  {
+    path: '/fenlei',
+    component:fenlei
+  },
+  {
+    path: '/todolist',
+    component: ToDoList
   }
+
 
 
 ]

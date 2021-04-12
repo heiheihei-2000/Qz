@@ -1,8 +1,6 @@
 
 <template>
 <div style="" id="head" >
-
-
 <el-menu
     router
     :default-active="activeIndex2"
@@ -21,8 +19,14 @@
     "
   >QuizPass</div>
   <el-menu-item  index="/shouye"> 首页</el-menu-item>
-  <el-menu-item index="/uemain" v-show="checkLogin">我的文档</el-menu-item>
-  <el-menu-item index="/kaodian" v-show="checkLogin">考点精炼</el-menu-item>
+  <el-submenu  index="2" v-show="checkLogin">
+    <template slot="title">wiki知识库</template>
+    <el-menu-item index="/uemain">我的文档</el-menu-item>
+    <el-menu-item index="/fenlei">分类管理</el-menu-item>
+    <el-menu-item index="2-3">选项3</el-menu-item>
+  </el-submenu>
+  <el-menu-item index="/kaodian2" v-show="checkLogin">考点精炼</el-menu-item>
+  <el-menu-item index="/todolist" v-show="checkLogin">待办事项</el-menu-item>
   <div style="text-align: center">
         <el-button style="float: right;margin-top: 10px;margin-right: 10px" v-show="checkLogin" @click="logout()">退出登陆</el-button>
   </div>
@@ -49,13 +53,11 @@
         <el-form-item label="确认密码" prop="checkPass">
           <el-input type="password" v-model="user.checkPass" autocomplete="off"></el-input>
         </el-form-item>
-
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
           <el-button @click="resetForm('user')">重置</el-button>
         </el-form-item>
       </el-form>
-
     </el-dialog>
     <el-dialog
         title="用户登陆"
