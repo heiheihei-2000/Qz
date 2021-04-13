@@ -18,9 +18,9 @@
           <el-input  v-model="find.name" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item  label="父分类" >
-          <el-select  v-model="find.parent" @change="changezhou" >
-            <el-option   v-for="item in tableData" :key="item.id" :value="item" :label="find.parent.name"></el-option>
+        <el-form-item  label="父分类" prop="parent" >
+          <el-select  filterable v-model="find.parent" value-key="id"  @change="cg" >
+            <el-option   v-for="item in tableData" :key="item.id" :value="item" :label="item.name"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -51,6 +51,14 @@
         >
       <template slot-scope="scope">
 
+          <el-button
+              size="mini"
+              >编辑</el-button>
+          <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+
       </template>
     </el-table-column>
   </el-table>
@@ -72,10 +80,9 @@ export default {
       dialogVisible :false,
     find:{
         id: "",
-        parentName: "",//
         name: "",
         sort: "",
-        parent:{}
+        parent:''
     },
       realfind:{
         id: "",
@@ -117,23 +124,41 @@ export default {
     }
   },
   methods:{
-
-    changezhou(val){
-      // const _this=this;
-      // let obj=null
-      // obj=this.tableData.find((item)=>{
-      //   return item.id === val
-      // })
-      // this.id=val.id
-      // console.log();
-
+    cg(val){
+      this.realfind=this.find;
+      this.realfind.parent=val.id
+      console.log("父节点",val.id);
 
     },
+    handleDelete(index, row) {
+      console.log(index, row);
+    },
+    // changezhou(val){
+    //   // const _this=this;
+    //   // let obj=null
+    //   // obj=this.tableData.find((item)=>{
+    //   //   return item.id === val
+    //   // })
+    //   // this.id=val.id
+    //   // console.log();
+    //
+    //
+    // },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
     submitForm() {
+      const _this=this;
       console.log(this.find);
+      this.axios.post("http://localhost:8080/Fenlei/add/",_this.realfind).then(function(resp){
+        if(resp.data.length==0){
+          _this.$message({
+            message: '添加成功',
+            type: 'success'
+          });
+          _this.dialogVisible=false;
+        }
+      })
     },
     /**
      * 空校验 null或""都返回true
@@ -206,8 +231,9 @@ export default {
     },
     init(){
      const _this=this
-      this.axios.get(" http://localhost:3000/fenlei").then(
+      this.axios.get(" http://localhost:8080/Fenlei/getAll/"+_this.$store.state.userId).then(
           function (resp) {
+            console.log(resp.data)
             const data = resp.data;
 
             console.log("原始数组：", resp.data.content);

@@ -40,19 +40,20 @@
         :visible.sync="dialogVisible"
         width="30%"
         >
-      <el-form :model="user" status-icon  ref="user" :rules="rules" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="user.name"></el-input>
-        </el-form-item>
-        <el-form-item label="账号" prop="id">
+      <el-form :model="user" status-icon  ref="user"  label-width="100px" class="demo-ruleForm">
+        <el-form-item label="编号" prop="id">
           <el-input v-model="user.id"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="user.pass" autocomplete="off"></el-input>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="user.name"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="user.checkPass" autocomplete="off"></el-input>
+        <el-form-item label="用户名" prop="account">
+          <el-input type="password" v-model="user.account" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
+        </el-form-item>
+
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
           <el-button @click="resetForm('user')">重置</el-button>
@@ -135,8 +136,9 @@ export default {
       user:{
         id:'',
         name:'',
-        pass:'',
-        checkpass:''
+        account:'',
+        password:'',
+        permissions:'1'
       },
       checkLogin: '',
       tureId:'',
@@ -146,17 +148,7 @@ export default {
         password:''
       },
 
-      rules: {
-        pass: [
-          { validator: validatePass, trigger: 'blur' }
-        ],
-        checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
-        ],
-        id: [
-          { validator: checkId, trigger: 'blur' }
-        ]
-      },
+
 
       dialogVisible: false,
       dialogVisible2:false,
@@ -210,7 +202,9 @@ export default {
      let a=qs.stringify(_this.login);
      this.axios.post('http://localhost:8080/user/login/',a
      ).then(function (resp){
-       if(resp==null){
+       console.log(resp);
+       console.log(resp.data);
+       if(resp.data.length==0){
          _this.$message({
                      message: '账号或密码错误',
                     type: 'warning'
@@ -286,32 +280,50 @@ export default {
     submitForm() {
 
        const _this=this;
-      var userId=[];
-      this.axios.get("http://localhost:3000/user").then(function (resp){
-      for( var i=0;i<resp.data.length;i++){
-        userId[i]=resp.data[i].id;
-      };
-       if(userId.indexOf(_this.user.id)<0){
-         _this.axios.post("http://localhost:3000/user",{
-           pass: _this.user.pass,
-           name: _this.user.name,
-           id:_this.user.id,
-         });
-         _this.$alert("您的账号："+_this.user.id+'    '
-             +"已经成功注册" ,{
-           confirmButtonText: '确定',
 
-         });
-       }else{
-         _this.$alert("您的输入的账号："+_this.user.id+'    '
-             +"已经被注册" ,{
-           confirmButtonText: '确定',
-
-         });
-       }
-
-
-      })
+           let b=qs.stringify(_this.user);
+           console.log(_this.user)
+           this.axios.post("http://localhost:8080/user/register/",_this.user).then(function (resp){
+             console.log(resp);
+             if(resp.data.length==0){
+               _this.$message({
+                 message: '注册失败',
+                 type: 'warning'
+               });
+             }else{
+               _this.$message({
+                 message: '注册成功',
+                 type: 'success'
+               });
+               _this.dialogVisible = false
+             }
+           })
+      // var userId=[];
+      // this.axios.post("http://localhost:8080/user/",).then(function (resp){
+      // for( var i=0;i<resp.data.length;i++){
+      //   userId[i]=resp.data[i].id;
+      // };
+      //  if(userId.indexOf(_this.user.id)<0){
+      //    _this.axios.post("http://localhost:3000/user",{
+      //      pass: _this.user.pass,
+      //      name: _this.user.name,
+      //      id:_this.user.id,
+      //    });
+      //    _this.$alert("您的账号："+_this.user.id+'    '
+      //        +"已经成功注册" ,{
+      //      confirmButtonText: '确定',
+      //
+      //    });
+      //  }else{
+      //    _this.$alert("您的输入的账号："+_this.user.id+'    '
+      //        +"已经被注册" ,{
+      //      confirmButtonText: '确定',
+      //
+      //    });
+      //  }
+      //
+      //
+      // })
 
 
       // this.axios.post("http://localhost:3000/user", {
