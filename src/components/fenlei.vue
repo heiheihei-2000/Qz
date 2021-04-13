@@ -20,7 +20,7 @@
 
         <el-form-item  label="父分类" >
           <el-select  v-model="find.parent" @change="changezhou" >
-            <el-option id="op"  v-for="item in tableData" :key="item.id" :value="item.id"></el-option>
+            <el-option   v-for="item in tableData" :key="item.id" :value="item" :label="find.parent.name"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -75,7 +75,7 @@ export default {
         parentName: "",//
         name: "",
         sort: "",
-      parent:''
+        parent:{}
     },
       realfind:{
         id: "",
@@ -119,18 +119,14 @@ export default {
   methods:{
 
     changezhou(val){
-      // let obj={}
+      // const _this=this;
+      // let obj=null
       // obj=this.tableData.find((item)=>{
-      //   return item.value === val
+      //   return item.id === val
       // })
-      //
-      // console.log(event)
-      var obj = {};
-      obj = this.tableData.find((item) =>{
-        return item.id === val;
-      });
-      console.log(obj);
-      console.log(val);
+      // this.id=val.id
+      // console.log();
+
 
     },
     resetForm(formName) {
