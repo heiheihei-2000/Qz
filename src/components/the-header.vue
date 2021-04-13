@@ -66,11 +66,11 @@
       >
       <span>
         <el-form :model="login" status-icon  ref="login" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="账号" prop="id">
-         <el-input v-model.number="login.id"></el-input>
+          <el-form-item label="账号" prop="account">
+         <el-input v-model.number="login.account"></el-input>
          </el-form-item>
-        <el-form-item label="密码" prop="pass">
-         <el-input type="password" v-model="login.pass" autocomplete="off"></el-input>
+        <el-form-item label="密码" prop="password">
+         <el-input type="password" v-model="login.password" autocomplete="off"></el-input>
          </el-form-item>
 
 
@@ -92,6 +92,7 @@
 
 </template>
 <script>
+import qs from 'qs'
 export default {
   data() {
     var checkId = (rule, value, callback) => {
@@ -131,21 +132,20 @@ export default {
     };
 
     return {
+      user:{
+        id:'',
+        name:'',
+        pass:'',
+        checkpass:''
+      },
       checkLogin: '',
       tureId:'',
       turePass:'',
       login:{
-        id: '',
-        pass: '',
-
+        account:'',
+        password:''
       },
-      user: {
-        pass: '',
-        checkPass: '',
-        name: '',
-        id: '',
 
-      },
       rules: {
         pass: [
           { validator: validatePass, trigger: 'blur' }
@@ -205,73 +205,79 @@ export default {
     },
     userlogin(){
      const _this=this;
-     let uid=[]
 
+     console.log(this.login)
+     let a=qs.stringify(_this.login);
+     this.axios.post('http://localhost:8080/user/login/',a
+     ).then(function (resp){
+       if(resp==null){
+         _this.$message({
+                     message: '账号或密码错误',
+                    type: 'warning'
+                   });
+       }else{
+         _this.$message({
+           message: '登陆成功',
+           type: 'success'
+         });
+         _this.checkLogin=1;
+         _this.dialogVisible2 = false
+         _this.$store.state.userId=resp.data.id
+         console.log(_this.$store.state.userId);
+       }
+     })
+     // this.axios({
+     //   method:'post',
+     //   url:'http://localhost:8080/user/login/',
+     //   data:{
+     //     "account":_this.login.account,
+     //     "password":_this.login.password
+     //   },
+     //   headers:{'Content-Type':'application/x-www-form-urlencoded'}
+     //
+     // }).then(
+     //     function (resp){
+     //
+     //     }
+     // )
 
-      this.axios.get("http://localhost:3000/user/").then(function (resp){
-        for (let i=0;i<resp.data.length;i++){
-          uid[i]=resp.data[i].id;
-          console.log(resp.data)
-          console.log(uid)
-        }
-        let inOf=_this.findall(uid,_this.login.id.toString());
-        console.log(_this.login.id.toString());
-        console.log(inOf);
-       console.log(resp.data[inOf].pass)
-        let a=parseInt( resp.data[inOf].pass);
-       let b=parseInt(_this.login.pass);
-        if(inOf[0]>0){
-          if( a==b){
-            _this.$message({
-              message: '恭喜你，登陆成功',
-              type: 'success',
-
-            });
-            _this.checkLogin=1;
-            _this.dialogVisible2 = false
-          }else{
-            _this.$message({
-              message: '密码错误',
-              type: 'warning'
-            });
-          }
-
-
-              }else {
-          _this.$message({
-            message: '用户名不存在',
-            type: 'warning'
-          });
-        }
-      })
-
-
-
-
-
-
-      // this.axios.get("http://localhost:3000/user/"+_this.login.id).then(function (resp){
-      //   console.log(resp.data)
-      //  if(resp.data=null){
-      //    _this.$message({
-      //      message: '用户名不存在',
-      //      type: 'warning'
-      //    });
-      //  }else  if (resp.data.pass==_this.login.pass){
-      //    _this.$message({
-      //      message: '恭喜你，登陆成功',
-      //      type: 'success'
-      //    });
-      //    _this.checkLogin=1;
-      //    _this.dialogVisible2 = false
-      //
-      //  }else {
-      //    _this.$message({
-      //      message: '密码错误',
-      //      type: 'warning'
-      //    });
-      //  }
-      // })
+     // let uid=[]
+     //  this.axios.get("http://localhost:3000/user/").then(function (resp){
+     //    for (let i=0;i<resp.data.length;i++){
+     //      uid[i]=resp.data[i].id;
+     //      console.log(resp.data)
+     //      console.log(uid)
+     //    }
+     //    let inOf=_this.findall(uid,_this.login.id.toString());
+     //    console.log(_this.login.id.toString());
+     //    console.log(inOf);
+     //   console.log(resp.data[inOf].pass)
+     //    let a=parseInt( resp.data[inOf].pass);
+     //   let b=parseInt(_this.login.pass);
+     //    if(inOf[0]>0){
+     //      if( a==b){
+     //        _this.$message({
+     //          message: '恭喜你，登陆成功',
+     //          type: 'success',
+     //
+     //        });
+     //        _this.checkLogin=1;
+     //        _this.dialogVisible2 = false
+     //      }else{
+     //        _this.$message({
+     //          message: '密码错误',
+     //          type: 'warning'
+     //        });
+     //      }
+     //
+     //
+     //          }else {
+     //      _this.$message({
+     //        message: '用户名不存在',
+     //        type: 'warning'
+     //      });
+     //    }
+     //  })
 
     },
     resetForm(formName) {

@@ -1,8 +1,8 @@
 <template>
-  <div style="margin: 20px">
+  <div >
     <el-container>
       <el-header height="20">
-        <h1>ToDoList</h1>
+        <img src="../assets/todolist3.jpg" width="900px" height="100px">
       </el-header>
       <el-main>
         <el-input placeholder="回车添加待办事项" class="todoinput"
@@ -114,9 +114,9 @@
     mounted:function () {
       //从数据库导入待办事项,查询 findAll
       var _this=this;
-      axios.get("http://localhost:8181/todolist/find/"+_this.$store.state.userid).then(
+      axios.get("http://localhost:8080/todolist/getAll/"+_this.$store.state.userId).then(
           function (resp) {
-           // console.log(resp.data)
+            console.log(resp)
             _this.todolist = resp.data
           }
       )
@@ -124,6 +124,15 @@
   };
 </script>
 <style scoped>
-  @import "../../style/todolist.css";
+.el-container{
+  padding-top: 50px;
+  width: 1000px;
+  height: 700px;
+  padding: 0px;
+  vertical-align:middle;
+  margin: 0 auto;/*水平居中*/
+}
+
+@import "../../style/todolist.css";
   /* 给style添加一个scoped表示当前样式只给当前页面设置。 */
 </style>
