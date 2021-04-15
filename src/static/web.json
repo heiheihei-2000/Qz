@@ -31,37 +31,43 @@
     "id": "100",
     "parent": "0",
     "name": "前端开发",
-    "sort": "100"
+    "sort": "100",
+    "check": "0"
   },
     {
       "id": "101",
       "parent": "100",
       "name": "vue",
-      "sort": "101"
+      "sort": "101",
+      "check": "1"
     },
     {
       "id": "102",
       "parent": "100",
       "name": "HTML & CSS",
-      "sort": "102"
+      "sort": "102",
+      "check": "0"
     },
     {
       "id": "200",
       "parent": "0",
       "name": "java",
-      "sort": "200"
+      "sort": "200",
+      "check": "1"
     },
     {
       "id": "201",
       "parent": "200",
       "name": "基础应用",
-      "sort": "201"
+      "sort": "201",
+      "check": "1"
     },
     {
       "id": "202",
       "parent": "200",
       "name": "框架应用",
-      "sort": "202"
+      "sort": "202",
+      "check": "0"
     }
   ]
 }

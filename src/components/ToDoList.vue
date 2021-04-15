@@ -9,7 +9,8 @@
                   @keyup.enter.native="add" v-model="newtodo.content">
         </el-input>
         <p>进行中：{{todolist.length}} 已完成：{{donenum}}</p>
-        <el-row v-for="(item,index) in todolist" class="list-row" :key="index">
+
+        <el-row v-for="(item,index) in todolist" class="list-row" :key="index" >
           <!--通过done的值来绑定class，当done是true时绑定green表示完成，false时绑定red这个class-->
           <el-col :xs="2" :sm="1" :lg="1" :xl="1" class="check"
                   :class="{'red':!todolist[index].done,'green':todolist[index].done}" >
@@ -56,6 +57,12 @@
       }
     },
     methods:{
+      load(){
+        this.count += 2
+
+
+      },
+
       add(){//增加
         var _this = this;
         if(this.newtodo.content){
@@ -124,10 +131,22 @@
   };
 </script>
 <style scoped>
+/deep/ .scrollbar {
+  white-space: nowrap;  }
+                          .el-scrollbar {
+                            display: flex;
+                            justify-content: space-around;
+                            padding: 0 10px;
+                          }
+/deep/ .el-scrollbar__wrap {
+overflow: scroll;
+  width: 110%;
+height: 100%;
+}
 .el-container{
   padding-top: 50px;
   width: 1000px;
-  height: 700px;
+  height: 1000px;
   padding: 0px;
   vertical-align:middle;
   margin: 0 auto;/*水平居中*/

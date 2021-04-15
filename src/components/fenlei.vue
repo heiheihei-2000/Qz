@@ -1,13 +1,13 @@
 <template>
 <div>
   <div>
-    <el-button  @click="dialogVisible = true">新增</el-button>
+    <el-button type="primary" round @click="dialogVisible = true" style="margin: 15px;">新增</el-button>
     <el-dialog
         title="新增分类"
         :visible.sync="dialogVisible"
         width="30%"
     >
-      <el-form :model="find" status-icon  ref="user"  label-width="100px" class="demo-ruleForm">
+      <el-form :model="find" status-icon  ref="user"  label-width="100px" class="demo-ruleForm" style="text-align: center">
         <el-form-item label="编号" prop="id">
           <el-input v-model="find.id"></el-input>
         </el-form-item>
@@ -17,9 +17,8 @@
         <el-form-item label="子分类名" prop="name">
           <el-input  v-model="find.name" autocomplete="off"></el-input>
         </el-form-item>
-
         <el-form-item  label="父分类" prop="parent" >
-          <el-select  filterable v-model="find.parent" value-key="id"  @change="cg" >
+          <el-select  filterable v-model="find.parent" value-key="id"  >
             <el-option   v-for="item in tableData" :key="item.id" :value="item" :label="item.name"></el-option>
           </el-select>
         </el-form-item>
@@ -31,9 +30,12 @@
     </el-dialog>
   </div>
   <el-table
+      :header-cell-style="{color:'black',borderColor:'red'}"
+      :cell-style="cellStyle"
       :data="tableData"
       row-key="id"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      style="border-color: #ef5f65"
       >
     <el-table-column
         prop="name"
@@ -46,14 +48,22 @@
         >
     </el-table-column>
     <el-table-column
+        label="审核状态"
+        style="text-align: center"
+    >
+<template slot-scope="scope" >
+
+      <i style="font-size: 30px ;color: #328307" class="el-icon-check" v-show=scope.row.check></i>
+      <i style="font-size: 30px;color: #ef5f65" class="el-icon-close" v-show="!scope.row.check"></i>
+</template>
+    </el-table-column>
+    <el-table-column
 
         label="Action"
         >
       <template slot-scope="scope">
 
-          <el-button
-              size="mini"
-              >编辑</el-button>
+
           <el-button
               size="mini"
               type="danger"
@@ -67,7 +77,7 @@
 
 <script>
 
-
+import qs from 'qs'
 
 export default {
 
@@ -82,13 +92,19 @@ export default {
         id: "",
         name: "",
         sort: "",
-        parent:''
+        parent:'',
+        check:false,
+        uId:''
     },
       realfind:{
         id: "",
         parent: "",
         name: "",
-        sort: ""
+        sort: "",
+
+
+        check:false
+
       },
 
       dialogFormEdit: false,
@@ -124,14 +140,21 @@ export default {
     }
   },
   methods:{
-    cg(val){
-      this.realfind=this.find;
-      this.realfind.parent=val.id
-      console.log("父节点",val.id);
-
+    cellStyle({ row, column, rowIndex, columnIndex }) {
+      // return "height:35px!important; border-color:red!important; color:#000000!important; padding:0px!important; height:40px!important";
     },
+
+
     handleDelete(index, row) {
-      console.log(index, row);
+      console.log(index, row)
+      const _this=this;
+      console.log(row)
+      let rowa=JSON.stringify(row)
+      console.log(rowa);
+      this.axios.delete("http://localhost:8080/Fenlei/delete/",{data:row}).then(function (resp){
+        console.log(resp)
+      })
+
     },
     // changezhou(val){
     //   // const _this=this;
@@ -150,13 +173,31 @@ export default {
     submitForm() {
       const _this=this;
       console.log(this.find);
-      this.axios.post("http://localhost:8080/Fenlei/add/",_this.realfind).then(function(resp){
+      this.find.parent=this.find.parent.id
+      this.find.uId=this.$store.state.userId
+      this.find.sort=parseInt(this.find.sort)
+      this.find.id=parseInt( this.find.id)
+
+     //  let realfind={
+     //    id: "",
+     //    parent: "",
+     //    name: "",
+     //    sort: "",
+     //    check:"0"
+     //  }
+     // realfind.id=this.find.id;
+     //  realfind.parent=this.find.parent.id;
+     //  realfind.name=this.find.name;
+     //  realfind.sort=this.find.sort
+      console.log( JSON.stringify(_this.find));
+      this.axios.post("http://localhost:8080/Fenlei/add/",_this.find).then(function(resp){
         if(resp.data.length==0){
           _this.$message({
             message: '添加成功',
             type: 'success'
           });
           _this.dialogVisible=false;
+          _this.init();
         }
       })
     },
@@ -235,18 +276,14 @@ export default {
           function (resp) {
             console.log(resp.data)
             const data = resp.data;
-
+            for(let i=0;i<data.length;i++){
+              // resp.data[i].check=
+            }
             console.log("原始数组：", resp.data.content);
             _this.tableData = _this.array2Tree(resp.data, 0);
             console.log("树形结构：", _this.tableData);
             _this.$store.state.find=_this.tableData;
-            let ke=[
 
-            ];
-            // for(let i=0;i<_this.tableData.length;i++){
-            //
-            //   ke[i].
-            // }
           }
       )
     }
@@ -254,6 +291,11 @@ export default {
 }
 </script>
 
+<style>
+.cell{
+  text-align: center;
+}
+</style>
 
 <style scoped>
 

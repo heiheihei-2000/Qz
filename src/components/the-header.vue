@@ -13,7 +13,7 @@
   <div class="logo"
        style="
     padding-left: 30px;
-    padding-top: 20px;
+    padding-top: 17px;
     padding-right: 50px;
     height: 40px;
     "
@@ -23,7 +23,6 @@
     <template slot="title">wiki知识库</template>
     <el-menu-item index="/uemain">我的文档</el-menu-item>
     <el-menu-item index="/fenlei">分类管理</el-menu-item>
-    <el-menu-item index="2-3">选项3</el-menu-item>
   </el-submenu>
   <el-menu-item index="/kaodian2" v-show="checkLogin">考点精炼</el-menu-item>
   <el-menu-item index="/todolist" v-show="checkLogin">待办事项</el-menu-item>
