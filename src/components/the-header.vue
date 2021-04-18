@@ -26,6 +26,7 @@
   </el-submenu>
   <el-menu-item index="/kaodian2" v-show="checkLogin">考点精炼</el-menu-item>
   <el-menu-item index="/todolist" v-show="checkLogin">待办事项</el-menu-item>
+  <el-menu-item index="/Home" v-show="checkLogin">网盘</el-menu-item>
   <div style="text-align: center">
         <el-button style="float: right;margin-top: 10px;margin-right: 10px" v-show="checkLogin" @click="logout()">退出登陆</el-button>
   </div>

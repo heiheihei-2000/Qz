@@ -11,7 +11,7 @@ import kaodian from "@/components/kaodian";
 import kaodian2 from "@/components/kaodian2";
 import fenlei from "@/components/fenlei";
 import ToDoList from "@/components/ToDoList";
-
+import Home from "@/components/Home"
 
 Vue.use(VueRouter)
 Vue.use(Antd);
@@ -57,8 +57,12 @@ const routes = [
   {
     path: '/todolist',
     component: ToDoList
-  }
+  },
 
+  {
+    path:'/Home',
+    component:Home
+  }
 
 
 ]
