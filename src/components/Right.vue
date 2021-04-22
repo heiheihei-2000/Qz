@@ -32,7 +32,6 @@
           action="http://localhost:8080/file/upload"
           :before-upload="beforeUpload"
           :data="{dirName: dirUrl}"
-          multiple
           :with-credentials="true"
           name="uploadfile"
           v-loading="loading"
@@ -69,9 +68,14 @@
       </el-table-column>
       <el-table-column>
         <template slot-scope="{row,$index}">
-        <el-tooltip v-if="row.filetype===''?false:true" class="item" effect="dark" content="下载" placement="bottom-start">
+        <el-tooltip v-if="row.filetype!==''" class="item" effect="dark" content="下载" placement="bottom-start">
           <el-button type="text"><i class="el-icon-download" @click="download(row)" ></i></el-button>
         </el-tooltip>
+
+        <el-tooltip v-if="row.filetype!==''" class="item" effect="dark" content="预览" placement="bottom-start">
+          <el-button type="text"><i class="el-icon-reading" @click="read(row)" ></i></el-button>
+        </el-tooltip>
+
         <el-tooltip class="item" effect="dark" content="删除" placement="bottom-start" >
           <el-button type="text"><i class="el-icon-delete" @click="del(row,$index)" ></i></el-button>
         </el-tooltip>
@@ -416,15 +420,51 @@
               },
               responseType:"blob"
           }).then(function (resp) {
-              let url = window.URL.createObjectURL(resp.data);
-              // #设置文件类型，这里以excel为例
-              // blob.type = "application/excel";
-              // #创建url之后可以模拟对此文件对象的一系列操作，例如：预览、下载
-              let a = document.createElement('a');
-              a.href = url;
-              a.download = row.filename+'.'+row.filetype;
-              a.click();
+            
+            // console.log("@lm-Debug ")
+            // console.log(row)
+  
+            // let blob = new Blob([resp.data],{
+            //   type:'application/msword;charset=UTF-8'
+            // })
+            let url = URL.createObjectURL(resp.data)
+            //
+            // console.log(fileUrl);
+            
+            
+            // window.open(fileUrl)
+            //   resp.data.type = "application/msword"
+            //   let url = window.URL.createObjectURL(resp.data);
+            //   // #设置文件类型，这里以excel为例
+            //   // blob.type = "application/excel";
+            //   // #创建url之后可以模拟对此文件对象的一系列操作，例如：预览、下载
+            //
+            //
+            //
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = row.filename+'.'+row.filetype;
+            a.click();
+            //
+            // console.log(a)
+            //
+            // console.log(url);
+  
           }).finally(()=>{this.init()})
+      },
+      read(row){
+        let fileDir = row.dirName
+
+        let subPathStr = fileDir.substr("D:\\FileDirTest\\".length)
+        subPathStr = subPathStr.replace(/\\/g,"/")
+        let fileName = row.filename +"."+ row.filetype
+
+        // 访问资源位置的url
+        let url = 'http://localhost:8080/fileMM/' + subPathStr + "/" + fileName;
+
+        let Base64 = require('js-base64').Base64
+
+        window.open('http://127.0.0.1:8012/onlinePreview?url='+encodeURIComponent(Base64.encode(url)));
       },
       newfolder(){
           let _this = this
