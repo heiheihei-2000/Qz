@@ -17,12 +17,12 @@
             <!--双向绑定checkbox，item.done的值判断是否选中-->
             <el-checkbox size="mini" v-model="item.done" @change="update(item)"></el-checkbox>
           </el-col>
-          <el-col :xs="20" :sm="22" :md="22" :lg="22" :xl="22">
+          <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
             <!--给input绑定一个删除线的class，当done为true表示完成时就添加这个class-->
             <input type=text @change="update(item)" v-model="item.content"  class="ipcont" :class="{'done':todolist[index].done}">
           </el-col>
 
-          <el-col :xs="2" :sm="1" :md="1" :lg="1" :xl="1" class="close">
+          <el-col :xs="2" :sm="3" :md="3" :lg="3" :xl="3" class="close">
             <el-button @click="toEditNote" class="el-button-style" size="small" round title="编辑事项详细内容" icon="el-icon-s-order"></el-button>
             <!--点击触发删除函数，会把index传递给del函数，删除一行数据-->
             <i class="el-icon-close" @click="del(index)"></i>
