@@ -103,8 +103,7 @@
         keywords: '',
         dialogVisible: false,
         loading:false,
-        //  path 标记了是否是文件夹
-        path:'/',
+        absolutePath:"D:\\FileDirTest\\",
         dirUrl:'',
         username:localStorage.getItem('name'),
         addfolder:false,
@@ -115,8 +114,8 @@
     created() {
       // console.log("=========================="+ this.dirUrl)
       if(this.$store.state.account !== ''){
-        this.dirUrl = 'D:\\FileDirTest\\' + this.$store.state.account
-        this.rootDir = 'D:\\FileDirTest\\' + this.$store.state.account
+        this.dirUrl = this.absolutePath + this.$store.state.account
+        this.rootDir = this.absolutePath + this.$store.state.account
         console.log("0000000000000000000000000000")
         
       }
@@ -455,7 +454,7 @@
       read(row){
         let fileDir = row.dirName
 
-        let subPathStr = fileDir.substr("D:\\FileDirTest\\".length)
+        let subPathStr = fileDir.substr(this.absolutePath.length)
         subPathStr = subPathStr.replace(/\\/g,"/")
         let fileName = row.filename +"."+ row.filetype
 
