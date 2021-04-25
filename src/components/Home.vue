@@ -2,9 +2,11 @@
   <el-container style="padding-top: 10px">
 
 
-    <el-aside><Left></Left></el-aside>
-    <el-main><Right></Right></el-main>
-
+    <el-aside>
+      <Left @lmessage="lmessage"></Left>
+    </el-aside>
+    <el-main><Right ref="right" :fileType="filetype"></Right></el-main>
+   
   </el-container>
 </template>
 
@@ -18,7 +20,7 @@ import  Left from "/src/components/Left"
 
       data(){
           return{
-
+            filetype: 0
           }
       },
         components:{
@@ -28,7 +30,13 @@ import  Left from "/src/components/Left"
         },
 
         methods:{
-
+          lmessage(data){
+            this.$refs.right.filetype = data
+            this.filetype = data
+          },
+          rmessage(){
+          
+          }
         }
     }
 </script>

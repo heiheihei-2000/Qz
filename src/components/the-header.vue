@@ -24,7 +24,7 @@
     <el-menu-item index="/uemain">我的文档</el-menu-item>
     <el-menu-item index="/fenlei">分类管理</el-menu-item>
   </el-submenu>
-  <el-menu-item index="/kaodian2" v-show="checkLogin">考点精炼</el-menu-item>
+  <el-menu-item index="/kaodian" v-show="checkLogin">考点精炼</el-menu-item>
   <el-menu-item index="/todolist" v-show="checkLogin">待办事项</el-menu-item>
   <el-menu-item index="/Home" v-show="checkLogin">网盘</el-menu-item>
   <div style="text-align: center">
@@ -187,7 +187,13 @@ export default {
         _this.checkLogin='';
         _this.login.id='';
         _this.login.pass='';
-         _this.$router.push("/");
+        _this.$router.push("/");
+        _this.$store.commit("setUserId",'')
+        _this.$store.commit("setAccount",'')
+        axios.get("http://localhost:8080/user/doLogout/").then((resp)=>{
+          console.log(resp);
+        })
+        
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -196,7 +202,7 @@ export default {
       });
     },
     userlogin(){
-     const _this=this;
+     let _this=this;
 
      console.log(this.login)
      let a=qs.stringify(_this.login);
@@ -214,10 +220,17 @@ export default {
            message: '登陆成功',
            type: 'success'
          });
+         console.log("------------------------------------------")
+         console.log(resp.data);
          _this.checkLogin=1;
          _this.dialogVisible2 = false
-         _this.$store.state.userId=resp.data.id
-         console.log(_this.$store.state.userId);
+         _this.$store.commit("setUserId",resp.data.id)
+         _this.$store.commit("setAccount",resp.data.account)
+         
+         
+         console.log(_this.$store.state.userId)
+         console.log(_this.$store.state.account)
+         
        }
      })
      // this.axios({
@@ -296,6 +309,16 @@ export default {
                  type: 'success'
                });
                _this.dialogVisible = false
+               let requestObj={
+                 newDirUrl:  'D:\\FileDirTest\\'+_this.user.account
+               }
+               axios.post("http://localhost:8080/fileDir/creatDir",requestObj).then(function (resp) {
+                 console.log(resp);
+                 if (resp.data === 1) {
+                   // _this.next('')
+                   _this.$alert('服务器初始化成功', '提示', {confirmButtonText: '确定'});
+                 }
+               })
              }
            })
       // var userId=[];

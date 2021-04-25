@@ -8,7 +8,7 @@ import Button from 'ant-design-vue/lib/button';
 import 'ant-design-vue/dist/antd.css';
 import Treetable from 'vue-table-with-tree-grid'
 import './utils/flexible'
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 Vue.component('tree-table',Treetable)
 new Vue({
   router,

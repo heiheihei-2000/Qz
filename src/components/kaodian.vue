@@ -13,7 +13,7 @@ margin: 20px;
   <el-upload
       class="upload-demo"
       ref="upload"
-      action="http://localhost:8080/file/python/upload"
+      action="http://localhost:8080/file/python/uploadQuestion"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
       :on-success="handleSuccess"
