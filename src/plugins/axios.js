@@ -12,6 +12,7 @@ let config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
+  withCredentials: true
 };
 
 const _axios = axios.create(config);
@@ -42,6 +43,7 @@ _axios.interceptors.response.use(
 Plugin.install = function(Vue, options) {
   Vue.axios = _axios;
   window.axios = _axios;
+  axios.defaults.withCredentials = true
   Object.defineProperties(Vue.prototype, {
     axios: {
       get() {
