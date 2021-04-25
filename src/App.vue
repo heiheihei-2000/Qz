@@ -23,7 +23,8 @@ export default {
   margin: 0;
 }
 section .el-main{
-
+ height: 1000px;
   padding: 0px;
+  background-color: #f7f7f7;
 }
 </style>

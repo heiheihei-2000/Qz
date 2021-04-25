@@ -243,6 +243,7 @@ this.init()
                 callback: action => {
                   this.$message({
                     type: 'info',
+
                     message:"再见"
                   });
                 }
@@ -343,9 +344,9 @@ this.init()
             } else {
               if (item.size < 1048576) {
                 var size = (item.size / 1024).toFixed(2) + 'KB'
-              } else if (item.size > 1048576 && item.size < 1073741824) {
+              } else if (item.size > 1048576 && item.size < 1073741824)
                 var size = (item.size / 1024 / 1024).toFixed(2) + 'MB'
-              } else if (item.size > 1073741824) {
+               else if (item.size > 1073741824) {
                 var size = (item.size / 1024 / 1024 / 1024).toFixed(2) + 'GB'
               }
             }

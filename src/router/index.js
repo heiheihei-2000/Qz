@@ -12,7 +12,7 @@ import kaodian2 from "@/components/kaodian2";
 import fenlei from "@/components/fenlei";
 import ToDoList from "@/components/ToDoList";
 import Home from "@/components/Home"
-
+import shequ from "@/components/shequ"
 Vue.use(VueRouter)
 Vue.use(Antd);
 const routes = [
@@ -62,7 +62,12 @@ const routes = [
   {
     path:'/Home',
     component:Home
+  },
+  {
+    path: '/shequ',
+    component:shequ
   }
+
 
 
 ]
