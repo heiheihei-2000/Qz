@@ -310,7 +310,8 @@ export default {
                });
                _this.dialogVisible = false
                let requestObj={
-                 newDirUrl:  'D:\\FileDirTest\\'+_this.user.account
+                 // absolutePath 修改根路径
+                 newDirUrl:  "\\Users\\chenglong\\Desktop\\wiki\\"+_this.user.account
                }
                axios.post("http://localhost:8080/fileDir/creatDir",requestObj).then(function (resp) {
                  console.log(resp);

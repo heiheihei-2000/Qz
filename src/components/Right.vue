@@ -103,7 +103,7 @@
         keywords: '',
         dialogVisible: false,
         loading:false,
-        absolutePath:"D:\\FileDirTest\\",
+        absolutePath:"\\Users\\chenglong\\Desktop\\wiki\\",
         dirUrl:'',
         username:localStorage.getItem('name'),
         addfolder:false,
