@@ -27,22 +27,13 @@ margin: 20px;
 
 
 </div>
-  <el-divider direction="horizontal"><i class="el-icon-mobile-phone"></i></el-divider>
-  <div >
+
+  <div style="margin-left: 50px;margin-right: 50px">
+    <el-divider direction="horizontal"><i class="el-icon-mobile-phone"></i></el-divider>
     <el-table
 :data="tableData"
        >
-      <el-table-column
 
-          prop="lda"
-          label="LDA模型结果"
-          >
-      </el-table-column>
-      <el-table-column
-        prop="lsi"
-          label="LSI模型结果"
-         >
-      </el-table-column>
       <el-table-column
         prop="tf"
           label="TF-IDF模型结果">

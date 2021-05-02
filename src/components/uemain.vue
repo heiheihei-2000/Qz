@@ -1,5 +1,5 @@
 <template>
-<div style="padding: 10px">
+<div style="padding: 10px;margin-top: 30px;margin-left: 50px;margin-right: 50px">
   <el-table
 
       :data="tableData"

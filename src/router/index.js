@@ -13,12 +13,13 @@ import fenlei from "@/components/fenlei";
 import ToDoList from "@/components/ToDoList";
 import Home from "@/components/Home"
 import shequ from "@/components/shequ"
+import loading from "@/components/loading"
 Vue.use(VueRouter)
 Vue.use(Antd);
 const routes = [
   {
   path:'/',
-  redirect:'/shouye'
+  redirect:'/loading'
   },
   {
     path: '/allFile',
@@ -66,6 +67,10 @@ const routes = [
   {
     path: '/shequ',
     component:shequ
+  },
+  {
+    path: '/loading',
+    component: loading
   }
 
 

@@ -19,14 +19,15 @@
     "
   >QuizPass</div>
   <el-menu-item  index="/shouye"> 首页</el-menu-item>
-  <el-submenu  index="2" v-show="checkLogin">
+  <el-submenu  index="2" v-show="checkLogin" >
     <template slot="title">wiki知识库</template>
-    <el-menu-item index="/uemain">我的文档</el-menu-item>
+    <el-menu-item index="/uemain"  >我的文档</el-menu-item>
     <el-menu-item index="/fenlei">分类管理</el-menu-item>
   </el-submenu>
   <el-menu-item index="/kaodian" v-show="checkLogin">考点精炼</el-menu-item>
   <el-menu-item index="/todolist" v-show="checkLogin">待办事项</el-menu-item>
   <el-menu-item index="/Home" v-show="checkLogin">网盘</el-menu-item>
+  <el-menu-item index="/shequ" v-show="checkLogin">社区</el-menu-item>
   <div style="text-align: center">
         <el-button style="float: right;margin-top: 10px;margin-right: 10px" v-show="checkLogin" @click="logout()">退出登陆</el-button>
   </div>
@@ -386,5 +387,8 @@ element.style {
 section .el-header{
 
   padding: 0px;
+}
+.el-menu--horizontal>.el-menu-item:not(.is-disabled):focus, .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover, .el-menu--horizontal>.el-submenu .el-submenu__title:hover {
+  background-color: rgba(0,0,0,0);
 }
 </style>

@@ -11,27 +11,27 @@
       <span slot="title">全部</span>
     </el-menu-item>
     <el-menu-item index="1" class="item">
-      <i class="el-icon-minus"></i>
+      <i class="el-icon-picture-outline"></i>
       <span slot="title">图片</span>
     </el-menu-item>
     <el-menu-item index="2" class="item">
-      <i class="el-icon-minus"></i>
+      <i class="el-icon-folder"></i>
       <span slot="title" class="item">文档</span>
     </el-menu-item>
     <el-menu-item index="3">
-      <i class="el-icon-minus"></i>
+      <i class="el-icon-film"></i>
       <span slot="title" class="item">视频</span>
     </el-menu-item>
     <el-menu-item index="4">
-      <i class="el-icon-minus"></i>
+      <i class="el-icon-mic"></i>
       <span slot="title" class="item">音乐</span>
     </el-menu-item>
     <el-menu-item index="6">
-    <i class="el-icon-minus"></i>
+    <i class="el-icon-document-copy"></i>
     <span slot="title" class="item">其他</span>
   </el-menu-item>
     <el-menu-item index="5">
-      <i class="el-icon-minus"></i>
+      <i class="el-icon-folder-opened"></i>
       <span slot="title" class="item">文件夹</span>
     </el-menu-item>
   
@@ -84,7 +84,7 @@
 
 <style scoped>
 .el-menu{
-  background-color:  #f7f7f7;
+  background-color:  white;
   border: 0;
   /*text-align: center;*/
 

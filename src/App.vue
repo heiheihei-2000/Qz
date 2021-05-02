@@ -40,6 +40,6 @@ export default {
 section .el-main{
  height: 1000px;
   padding: 0px;
-  background-color: #f7f7f7;
+  background-color: white;
 }
 </style>

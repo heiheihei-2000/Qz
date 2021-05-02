@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="margin-left: 50px;margin-right: 50px">
   <div>
     <el-button type="primary" round @click="dialogVisible = true" style="margin: 15px;">新增</el-button>
     <el-dialog
@@ -153,6 +153,7 @@ export default {
       console.log(rowa);
       this.axios.delete("http://localhost:8080/Fenlei/delete/",{data:row}).then(function (resp){
         console.log(resp)
+        _this.init()
       })
 
     },

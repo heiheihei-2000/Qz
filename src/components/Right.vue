@@ -103,7 +103,7 @@
         keywords: '',
         dialogVisible: false,
         loading:false,
-        absolutePath:"\\Users\\chenglong\\Desktop\\wiki\\",
+        absolutePath:"/Users/chenglong/Desktop/wiki/",
         dirUrl:'',
         username:localStorage.getItem('name'),
         addfolder:false,
@@ -337,7 +337,7 @@
             if(row.filetype === ''){
               axios.delete("http://localhost:8080/fileDir/deleteFiledir",{data:{
                   u_id: _this.$store.state.userId,
-                  deleteDirUrl: _this.dirUrl+'\\'+row.filename,
+                  deleteDirUrl: _this.dirUrl+'/'+row.filename,
                   deleteFileDirectly: false
                 }}).then(function (resp) {
                 console.log(resp);
@@ -455,7 +455,7 @@
         let fileDir = row.dirName
 
         let subPathStr = fileDir.substr(this.absolutePath.length)
-        subPathStr = subPathStr.replace(/\\/g,"/")
+        // subPathStr = subPathStr.replace(/\\/g,"/")
         let fileName = row.filename +"."+ row.filetype
 
         // 访问资源位置的url
@@ -468,9 +468,9 @@
       newfolder(){
           let _this = this
           console.log(this.dirUrl);
-          console.log(this.dirUrl + '\\' + this.input);
+          console.log(this.dirUrl + '/' + this.input);
           let requestObj={
-              newDirUrl: this.dirUrl + '\\' + this.input
+              newDirUrl: this.dirUrl + '/' + this.input
           }
           axios.post("http://localhost:8080/fileDir/creatDir",requestObj).then(function (resp) {
               console.log(resp);
@@ -536,7 +536,7 @@
           // 如果是文件夾的話
           if(row.filetype === ''){
               //合成新路徑
-              let newDirPath = this.dirUrl + '\\' + row.filename
+              let newDirPath = this.dirUrl + '/' + row.filename
               console.log("newDir--> " + newDirPath)
               this.dirUrl = newDirPath
               //初始化
@@ -585,7 +585,7 @@
 
       },
       back(){
-          let lastIndexOf = this.dirUrl.lastIndexOf('\\')
+          let lastIndexOf = this.dirUrl.lastIndexOf('/')
           console.log(lastIndexOf);
           console.log(this.dirUrl.substring(0, lastIndexOf));
           this.dirUrl = this.dirUrl.substring(0, lastIndexOf);
@@ -650,6 +650,7 @@
     height: 40px;
     font: 12px/1.5 "Microsoft YaHei", arial, SimSun, "宋体";
     line-height: 30px;
+    margin-top: 15px;
   }
   .nav{
     max-width: 100%;

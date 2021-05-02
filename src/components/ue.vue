@@ -1,6 +1,6 @@
 <template>
 <div style="
-height: 610px">
+height: 610px;margin-top: 50px">
     <script id="editor" type="text/plain"></script>
     <div name="option" style="width: 400px;height: 610px;float: left">
       <el-table
@@ -11,17 +11,17 @@ height: 610px">
         <el-table-column
             prop="noteId"
             label="文档名"
-            width="100px">
+            >
         </el-table-column>
         <el-table-column
             prop="noteName"
             label="分类"
-            width="100px">
+           >
         </el-table-column>
         <el-table-column
             fixed="right"
             label="操作"
-            width="100">
+           >
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="handleClick(scope.row)"  v-show="true">编辑</el-button>
           </template>
