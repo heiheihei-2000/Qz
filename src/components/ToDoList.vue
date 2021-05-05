@@ -69,27 +69,25 @@
           let posnewtodo = {
             content:this.newtodo.content,
             done:false,
-            u_id:_this.$store.state.userid
+            u_id:_this.$store.state.userId
           }
           //将添加事项导入数据库 save
-          axios.post("http://localhost:8181/todolist/save",posnewtodo)
+          axios.post("http://42.192.150.158:8080/todolist/add",posnewtodo)
           .then(function (resp) {
-            console.log(resp.data)
-            for(let item in resp.data){
-              posnewtodo[item] = resp.data[item];
-            }
+              _this.todolist.push(resp.data)
           }).catch(error=>{
             console.log('接口或处理逻辑出错');
           })
 
-          this.todolist.push(posnewtodo)
           this.newtodo.content = ''
+          console.log(_this.todolist);
         }
       },
       del(index){//删除 delete
-        let delTodoId = this.todolist[index].id;
+        let delTodo = this.todolist[index]
         // console.log(delTodoId);
-        axios.delete("http://localhost:8181/todolist/deleteById/"+delTodoId).then(
+        axios.delete("http://42.192.150.158:8080/todolist/delete",{data:delTodo
+        }).then(
               this.todolist.splice(index,1)
         ).catch(error=>{
           console.log('接口或处理逻辑出错')
@@ -98,7 +96,7 @@
       update(item){//更新数据
        // console.log("原数据：")
        // console.log(item);
-        axios.put("http://localhost:8181/todolist/update",item)
+        axios.post("http://42.192.150.158:8080/todolist/update",item)
             .then(
 
             )
@@ -121,7 +119,7 @@
     mounted:function () {
       //从数据库导入待办事项,查询 findAll
       var _this=this;
-      axios.get("http://localhost:8080/todolist/getAll/"+_this.$store.state.userId).then(
+      axios.get("http://42.192.150.158:8080/todolist/getAll/"+_this.$store.state.userId).then(
           function (resp) {
             console.log(resp)
             _this.todolist = resp.data

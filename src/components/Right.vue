@@ -29,7 +29,7 @@
         <el-upload
           class="upload-demo"
           drag
-          action="http://localhost:8080/file/upload"
+          action="http://42.192.150.158:8080/file/upload"
           :before-upload="beforeUpload"
           :data="{dirName: dirUrl}"
           :with-credentials="true"
@@ -103,7 +103,7 @@
         keywords: '',
         dialogVisible: false,
         loading:false,
-        absolutePath:"/Users/chenglong/Desktop/wiki/",
+        absolutePath:"/usr/local/CODE/rushBBB/wiki/",
         dirUrl:'',
         username:localStorage.getItem('name'),
         addfolder:false,
@@ -140,7 +140,7 @@
           let data = new FormData()
           data.append("dirUrl",this.dirUrl)
 
-          axios.post("http://localhost:8080/file/selectFilesByDirUrl",data).then(function (resp) {
+          axios.post("http://42.192.150.158:8080/file/selectFilesByDirUrl",data).then(function (resp) {
               console.log(resp);
               resp.data.forEach(item=>{
                   console.log(item);
@@ -162,7 +162,7 @@
               //获取文件夾列表
               data = new FormData()
               data.append("url",_this.dirUrl)
-              axios.post("http://localhost:8080/fileDir/urlList",data).then(function (resp) {
+              axios.post("http://42.192.150.158:8080/fileDir/urlList",data).then(function (resp) {
                   console.log("respdir");
                   let respData = resp.data
                   let objKeys = Object.keys(respData)
@@ -290,7 +290,7 @@
             // data.append("uploadfile",file)
             // data.append("dirName",this.dirUrl)
             // console.log(data);
-            // axios.post("http://localhost:8080/file/upload",data).then(function(resp){
+            // axios.post("http://42.192.150.158:8080/file/upload",data).then(function(resp){
             //     console.log(resp)
             // })
             // this.loading=false
@@ -335,7 +335,7 @@
           type: 'warning'
         }).then(() => {
             if(row.filetype === ''){
-              axios.delete("http://localhost:8080/fileDir/deleteFiledir",{data:{
+              axios.delete("http://42.192.150.158:8080/fileDir/deleteFiledir",{data:{
                   u_id: _this.$store.state.userId,
                   deleteDirUrl: _this.dirUrl+'/'+row.filename,
                   deleteFileDirectly: false
@@ -362,7 +362,7 @@
               
             }else{
               alert("删除的是文件")
-              axios.delete("http://localhost:8080/file/deleteFile",{
+              axios.delete("http://42.192.150.158:8080/file/deleteFile",{
                 params:{
                   fileId:row.fileid
                 }
@@ -380,7 +380,7 @@
                 }
               })
             }
-            // axios.get("http://localhost:8080/file/fileDown",{
+            // axios.get("http://42.192.150.158:8080/file/fileDown",{
             //     params:{
             //         fileDir: _this.dirUrl,
             //         fileName: row.filename,
@@ -411,7 +411,7 @@
       download(row){
         // window.location.href=this.$HOST+'v2/download?username='+this.username+'&name='+name
           let _this = this
-          axios.get("http://localhost:8080/file/fileDown",{
+          axios.get("http://42.192.150.158:8080/file/fileDown",{
               params:{
                   fileDir: _this.dirUrl,
                   fileName: row.filename,
@@ -459,11 +459,11 @@
         let fileName = row.filename +"."+ row.filetype
 
         // 访问资源位置的url
-        let url = 'http://localhost:8080/fileMM/' + subPathStr + "/" + fileName;
+        let url = 'http://42.192.150.158:8080/fileMM/' + subPathStr + "/" + fileName;
 
         let Base64 = require('js-base64').Base64
 
-        window.open('http://127.0.0.1:8012/onlinePreview?url='+encodeURIComponent(Base64.encode(url)));
+        window.open('http://42.192.150.158:8012/onlinePreview?url='+encodeURIComponent(Base64.encode(url)));
       },
       newfolder(){
           let _this = this
@@ -472,7 +472,7 @@
           let requestObj={
               newDirUrl: this.dirUrl + '/' + this.input
           }
-          axios.post("http://localhost:8080/fileDir/creatDir",requestObj).then(function (resp) {
+          axios.post("http://42.192.150.158:8080/fileDir/creatDir",requestObj).then(function (resp) {
               console.log(resp);
               if(resp.data===1){
                   _this.addfolder=false

@@ -116,7 +116,7 @@ export default {
     init () {
       var _this= this
       console.log("init");
-      this.axios.get("http://localhost:8080/Note/getSonLists/"+_this.$store.state.parent).then(
+      this.axios.get("http://42.192.150.158:8080/Note/getSonLists/"+_this.$store.state.parent).then(
           function (resp) {
             let demoT ={
 

@@ -15,7 +15,7 @@ export default {
   },
   created() {
     let _this = this
-    axios.post("http://localhost:8080/user/isLogin").then(function (resp) {
+    axios.post("http://42.192.150.158:8080/user/isLogin").then(function (resp) {
       console.log("create");
       console.log(resp);
       if(resp.data===''){

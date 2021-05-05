@@ -151,7 +151,7 @@ export default {
       console.log(row)
       let rowa=JSON.stringify(row)
       console.log(rowa);
-      this.axios.delete("http://localhost:8080/Fenlei/delete/",{data:row}).then(function (resp){
+      this.axios.delete("http://42.192.150.158:8080/Fenlei/delete/",{data:row}).then(function (resp){
         console.log(resp)
         _this.init()
       })
@@ -191,7 +191,7 @@ export default {
      //  realfind.name=this.find.name;
      //  realfind.sort=this.find.sort
       console.log( JSON.stringify(_this.find));
-      this.axios.post("http://localhost:8080/Fenlei/add/",_this.find).then(function(resp){
+      this.axios.post("http://42.192.150.158:8080/Fenlei/add/",_this.find).then(function(resp){
         if(resp.data.length==0){
           _this.$message({
             message: '添加成功',
@@ -273,7 +273,7 @@ export default {
     },
     init(){
      const _this=this
-      this.axios.get(" http://localhost:8080/Fenlei/getAll/"+_this.$store.state.userId).then(
+      this.axios.get(" http://42.192.150.158:8080/Fenlei/getAll/"+_this.$store.state.userId).then(
           function (resp) {
             console.log(resp.data)
             const data = resp.data;

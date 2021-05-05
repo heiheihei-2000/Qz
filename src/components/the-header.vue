@@ -191,7 +191,7 @@ export default {
         _this.$router.push("/");
         _this.$store.commit("setUserId",'')
         _this.$store.commit("setAccount",'')
-        axios.get("http://localhost:8080/user/doLogout/").then((resp)=>{
+        axios.get("http://42.192.150.158:8080/user/doLogout/").then((resp)=>{
           console.log(resp);
         })
         
@@ -207,7 +207,7 @@ export default {
 
      console.log(this.login)
      let a=qs.stringify(_this.login);
-     this.axios.post('http://localhost:8080/user/login/',a
+     this.axios.post('http://42.192.150.158:8080/user/login/',a
      ).then(function (resp){
        console.log(resp);
        console.log(resp.data);
@@ -236,7 +236,7 @@ export default {
      })
      // this.axios({
      //   method:'post',
-     //   url:'http://localhost:8080/user/login/',
+     //   url:'http://42.192.150.158:8080/user/login/',
      //   data:{
      //     "account":_this.login.account,
      //     "password":_this.login.password
@@ -297,7 +297,7 @@ export default {
 
            let b=qs.stringify(_this.user);
            console.log(_this.user)
-           this.axios.post("http://localhost:8080/user/register/",_this.user).then(function (resp){
+           this.axios.post("http://42.192.150.158:8080/user/register/",_this.user).then(function (resp){
              console.log(resp);
              if(resp.data.length==0){
                _this.$message({
@@ -312,9 +312,9 @@ export default {
                _this.dialogVisible = false
                let requestObj={
                  // absolutePath 修改根路径
-                 newDirUrl:  "\\Users\\chenglong\\Desktop\\wiki\\"+_this.user.account
+                 newDirUrl:  "/usr/local/CODE/rushBBB/wiki/"+_this.user.account
                }
-               axios.post("http://localhost:8080/fileDir/creatDir",requestObj).then(function (resp) {
+               axios.post("http://42.192.150.158:8080/fileDir/creatDir",requestObj).then(function (resp) {
                  console.log(resp);
                  if (resp.data === 1) {
                    // _this.next('')
@@ -324,7 +324,7 @@ export default {
              }
            })
       // var userId=[];
-      // this.axios.post("http://localhost:8080/user/",).then(function (resp){
+      // this.axios.post("http://42.192.150.158:8080/user/",).then(function (resp){
       // for( var i=0;i<resp.data.length;i++){
       //   userId[i]=resp.data[i].id;
       // };

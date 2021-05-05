@@ -80,9 +80,7 @@ const routes = [
 const router = new VueRouter({
   routes,
   mode: 'history',//history去掉#，hash是有#的
-
-
-
+  // base:'D:\\Code\\Qz\\dist'
 }
 )
 

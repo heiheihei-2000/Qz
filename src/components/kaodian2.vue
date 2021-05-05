@@ -14,7 +14,7 @@ margin: 20px;
           class="upload-demo"
 
           ref="upload"
-          action="http://localhost:8080/file/python/upload"
+          action="http://42.192.150.158:8080/file/python/upload"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :on-success="handleSuccess"

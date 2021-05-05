@@ -78,7 +78,7 @@ export default {
       console.log("init");
       this.$axios({
         method: 'get',
-        url: 'http://localhost:8080/Note/test/1',
+        url: 'http://42.192.150.158:8080/Note/test/1',
         // data:{"page":this.pagination.pageIndex,"limit":this.pagination.pageSize, "pid": this.row.id},
 
         headers: {
@@ -117,7 +117,7 @@ export default {
       const _this = this;
       console.log(row.id);
       this.$store.state.parent=row.id;
-      //   axios.get("http://localhost:8080/Note/test/1")
+      //   axios.get("http://42.192.150.158:8080/Note/test/1")
       // .then(function (resp){
       //   console.log(resp.data)
       // })
