@@ -42,7 +42,7 @@
          </ul>
        </div>
        <div>
-       <div style="width: 700px;height: 150px;margin-left: 20px;margin-top: 30px;
+       <div style="width: 48%;height: 150px;margin-left: 20px;margin-top: 30px;
        border-width: 1px;border-color: black;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
        float:left;
        padding-top: 40px;
@@ -59,7 +59,7 @@
          </ul>
 
        </div>
-         <div style="width: 700px;height: 150px;margin-left: 20px;margin-top: 30px;
+         <div style="width: 48%;height: 150px;margin-left: 20px;margin-top: 30px;
        border-width: 1px;border-color: black;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
        float:left;
        padding-top: 40px;
